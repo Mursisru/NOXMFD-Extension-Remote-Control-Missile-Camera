@@ -15,8 +15,8 @@
 
   <PropertyGroup>
     <TargetFramework>netstandard2.1</TargetFramework>
-    <AssemblyName>RcMissileCamera</AssemblyName>
-    <Product>RC Missile Camera</Product>
+    <AssemblyName>NOXMFD.RcMissileCamera</AssemblyName>
+    <Product>NOXMFD: RC Missile Camera Extension</Product>
     <Description>MissileCamera: Remote Control page for NO XMFD, as an extension</Description>
     <Version>0.1.0</Version>
     <LangVersion>latest</LangVersion>
