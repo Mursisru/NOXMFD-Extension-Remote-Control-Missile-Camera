@@ -2,23 +2,25 @@
 <html>
 <head>
 <meta charset="utf-8">
-<title>NO XMFD — RC</title>
+<title>NO XMFD — MISSILE CAMERA</title>
 <!--
-  RC page, served by this extension's own RcAssets.Resolve at /ext/rc-missile-camera (NOXMFD's
-  generic per-extension route, docs/extensions-api.md) rather than a page NOXMFD itself hosts.
-  Missile Camera: Remote Control's feed + controls, mirroring the RC mod's own in-cockpit
-  fullscreen view. Unlike TGP/RDR this page both receives state AND sends commands — it owns a
-  drag-to-aim pointer surface and a few buttons, POSTing straight to this extension's own command
-  endpoint (postCmd in rc.js) rather than NOXMFD's shared send-command.js/CommandEnvelope.
+  MISSILE CAMERA page, served by this extension's own MissileCameraAssets.Resolve at
+  /ext/rc-missile-camera (NOXMFD's generic per-extension route, docs/extensions-api.md) rather
+  than a page NOXMFD itself hosts. Missile Camera: Remote Control's feed + controls, mirroring the
+  RC mod's own in-cockpit fullscreen view. Unlike TGP/RDR this page both receives state AND sends
+  commands — it owns a drag-to-aim pointer surface and a few buttons, POSTing straight to this
+  extension's own command endpoint (postCmd in missile-camera.js) rather than NOXMFD's shared
+  send-command.js/CommandEnvelope.
 
   Shell -> page messages (all {mfd:true, ...}), the SAME contract every extension's page gets
   regardless of which one it is (both shells rename their internal 'ext_<id>' slice to this):
     'ext' : { data: { available, fsActive, controlling, missile, thr, boost, link, formation,
               pool, aimX, aimY, tele, markers } }
-              data mirrors the "rc" block RcTelemetry.cs builds, at the normal 10 Hz frame rate.
-              aimX/aimY (0..1, 0..1, Unity convention — y=0 bottom, flip for CSS top) is the
-              reticle's viewport position — see the ponytail note in RcTelemetry.cs for why this
-              rides the normal slice instead of its own high-rate channel today.
+              data mirrors the "rc" block MissileCameraTelemetry.cs builds, at the normal 10 Hz
+              frame rate. aimX/aimY (0..1, 0..1, Unity convention — y=0 bottom, flip for CSS top)
+              is the reticle's viewport position — see the ponytail note in
+              MissileCameraTelemetry.cs for why this rides the normal slice instead of its own
+              high-rate channel today.
               tele mirrors the base MissileCamera mod's own Fullscreen HUD text fields 1:1 (same
               pre-formatted strings/units — see McBridge.cs there): { missile, target, ownship,
               speed, alt, range, g, fuel, mach, guidance, tgtAngle, hasTarget, hasTti, ttiSec,
@@ -29,8 +31,8 @@
               locked/selected target), c (hex color) }, ...], always an array.
     'orient': app-wide orientation (kept for parity with every other page).
 
-  Page -> game commands (POST /ext/rc-missile-camera/command, RcCommands.cs — own envelope, own
-  shape, NOT NOXMFD's CommandEnvelope):
+  Page -> game commands (POST /ext/rc-missile-camera/command, MissileCameraCommands.cs — own
+  envelope, own shape, NOT NOXMFD's CommandEnvelope):
     aim{x,y}, throttle-set{v}, throttle-adjust{v}, boost{on}, take, take-at{index}, release,
     formation, detonate, refresh-pool, vision-cycle.
 
@@ -39,12 +41,12 @@
 -->
 <link rel="stylesheet" href="/assets/shared/font.css">
 <link rel="stylesheet" href="/assets/shared/theme.css">
-<link rel="stylesheet" href="/ext/rc-missile-camera/rc.css">
+<link rel="stylesheet" href="/ext/rc-missile-camera/missile-camera.css">
 </head>
 <body>
   <div class="rc-panel" id="rc-panel">
     <div class="rc-empty mfd-empty" id="rc-empty">
-      <span class="mfd-empty-title">RC</span><span id="rc-empty-msg">— NOT INSTALLED —</span>
+      <span class="mfd-empty-title">MISSILE CAMERA</span><span id="rc-empty-msg">— NOT INSTALLED —</span>
     </div>
 
     <!-- Aim surface: covers the feed, captures pointer drags, hosts the feed image + reticle. -->
@@ -101,6 +103,6 @@
     </div>
   </div>
 
-<script src="/ext/rc-missile-camera/rc.js"></script>
+<script src="/ext/rc-missile-camera/missile-camera.js"></script>
 </body>
 </html>

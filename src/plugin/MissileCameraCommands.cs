@@ -8,7 +8,7 @@ namespace RcMissileCamera
     // its POST body and the C# that parses it, no shared schema needed). Flat fields, same
     // JsonUtility-flakiness-with-nested-objects reasoning NOXMFD's own envelope follows.
     [Serializable]
-    internal class RcCommandEnvelope
+    internal class MissileCameraCommandEnvelope
     {
         public string cmd = string.Empty;
         public float  x;      // aim: yaw delta, degrees (right positive)
@@ -20,13 +20,13 @@ namespace RcMissileCamera
 
     // Registered as the Api.CommandHandler for this extension (Plugin.cs) — invoked on the
     // Unity main thread once per queued POST to /ext/rc-missile-camera/command.
-    internal static class RcCommands
+    internal static class MissileCameraCommands
     {
         internal static void Handle(string json)
         {
-            RcCommandEnvelope? env;
-            try { env = JsonUtility.FromJson<RcCommandEnvelope>(json); }
-            catch (Exception ex) { Plugin.Log?.LogDebug($"[RCCAM] malformed command: {ex.Message}"); return; }
+            MissileCameraCommandEnvelope? env;
+            try { env = JsonUtility.FromJson<MissileCameraCommandEnvelope>(json); }
+            catch (Exception ex) { Plugin.Log?.LogDebug($"[MISSILE CAMERA] malformed command: {ex.Message}"); return; }
             if (env == null || string.IsNullOrEmpty(env.cmd)) return;
 
             switch (env.cmd)
@@ -42,7 +42,7 @@ namespace RcMissileCamera
                 case "detonate":        RcBridge.ManualDetonate(); break;
                 case "refresh-pool":    RcBridge.RefreshPool(); break;
                 case "vision-cycle":    McBridge.CycleVisionMode(); break;
-                default: Plugin.Log?.LogDebug($"[RCCAM] unknown command '{env.cmd}'."); break;
+                default: Plugin.Log?.LogDebug($"[MISSILE CAMERA] unknown command '{env.cmd}'."); break;
             }
         }
     }

@@ -1,8 +1,9 @@
-// RC page — Missile Camera: Remote Control feed + controls. See rc.html for the full message
-// contract: shell -> page is the standard extension contract every NOXMFD extension's page gets
-// ({mfd:true, type:'ext', data:{...}}, docs/extensions-api.md); page -> game POSTs straight to
-// this extension's own /ext/rc-missile-camera/command (RcCommands.cs) — not NOXMFD's shared
-// send-command.js/CommandEnvelope, since this extension owns both ends of that shape itself.
+// MISSILE CAMERA page — Missile Camera: Remote Control feed + controls. See missile-camera.html
+// for the full message contract: shell -> page is the standard extension contract every NOXMFD
+// extension's page gets ({mfd:true, type:'ext', data:{...}}, docs/extensions-api.md); page -> game
+// POSTs straight to this extension's own /ext/rc-missile-camera/command (MissileCameraCommands.cs)
+// — not NOXMFD's shared send-command.js/CommandEnvelope, since this extension owns both ends of
+// that shape itself.
 //
 // Unlike TGP (pure reactive renderer) this page also OWNS input: a drag-to-aim pointer surface
 // over the feed, plus a few buttons. Aim deltas are batched on a short timer rather than sent per
@@ -195,7 +196,7 @@ function renderTele(tele) {
 }
 
 // ── Target markers ──────────────────────────────────────────────────────────────────
-// Cockpit HUD markers reprojected onto the feed camera (see rc.html's "markers" doc) — same
+// Cockpit HUD markers reprojected onto the feed camera (see missile-camera.html's "markers" doc) — same
 // viewport-flip reasoning as the aim reticle below. Full clear+rebuild each update: marker
 // counts are small (a handful of contacts), and this rides the normal telemetry rate — no need
 // to diff.
@@ -253,7 +254,7 @@ function applyRcState(m) {
   // RcBridge.ReticleViewport uses Unity's viewport convention (0 = bottom, 1 = top — same as
   // Camera.WorldToViewportPoint), but CSS `top` counts from the top of the box. Flip Y here;
   // X needs no flip (both conventions agree left→right). Rides the normal 10 Hz slice — see the
-  // ponytail note in RcTelemetry.cs for why this isn't a dedicated high-rate channel (yet).
+  // ponytail note in MissileCameraTelemetry.cs for why this isn't a dedicated high-rate channel (yet).
   if (typeof m.aimX === 'number' && typeof m.aimY === 'number') {
     rcReticle.style.left = (m.aimX * 100) + '%';
     rcReticle.style.top  = ((1 - m.aimY) * 100) + '%';

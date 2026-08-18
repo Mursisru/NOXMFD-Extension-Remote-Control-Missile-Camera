@@ -46,7 +46,7 @@ namespace RcMissileCamera
 
         // Raw JSON array straight from the base mod (McBridge.MarkersJson) — spliced verbatim
         // into the "rc" block's "markers" key, same reasoning as TelemetryJson above. "[]" (not
-        // null) when unavailable, since rc.js always expects an array here.
+        // null) when unavailable, since missile-camera.js always expects an array here.
         internal static string MarkersJson => Available ? (_markersJson!() ?? "[]") : "[]";
 
         // Cycle the Fullscreen-style vision filter (Color/NightVision/WhiteHot/BlackHot/Contour) —
@@ -54,8 +54,8 @@ namespace RcMissileCamera
         internal static void CycleVisionMode() { if (Available) _cycleVisionMode!(); }
 
         // Level-triggered — call every tick with the current "do I still need frames" state (false
-        // once WantsRcFrames drops, same as RcFeed already does for its own gating). No-op when the
-        // base mod's Bridge isn't present, so callers don't need to guard this themselves.
+        // once WantsMjpegFrames drops, same as RcFeed already does for its own gating). No-op when
+        // the base mod's Bridge isn't present, so callers don't need to guard this themselves.
         internal static void RequestCapture(bool active) { if (Available) _requestCapture!(active); }
 
         private static bool EnsureResolved()
@@ -76,7 +76,7 @@ namespace RcMissileCamera
                 Type? t = asm.GetType("MissileCamera.Bridge.McBridge");
                 if (t == null)
                 {
-                    Plugin.Log?.LogWarning("[RCCAM] MissileCamera found but has no Bridge — too old? Headless RC capture disabled (falls back to fullscreen-gated feed).");
+                    Plugin.Log?.LogWarning("[MISSILE CAMERA] MissileCamera found but has no Bridge — too old? Headless capture disabled (falls back to fullscreen-gated feed).");
                     return false;
                 }
 
@@ -84,7 +84,7 @@ namespace RcMissileCamera
                 int ver = verField != null ? (int)verField.GetValue(null) : 0;
                 if (ver < MinApiVersion)
                 {
-                    Plugin.Log?.LogWarning($"[RCCAM] MissileCamera Bridge ApiVersion {ver} < {MinApiVersion} — headless RC capture disabled.");
+                    Plugin.Log?.LogWarning($"[MISSILE CAMERA] MissileCamera Bridge ApiVersion {ver} < {MinApiVersion} — headless capture disabled.");
                     return false;
                 }
 
@@ -101,14 +101,14 @@ namespace RcMissileCamera
                     && _cycleVisionMode != null
                     && _requestCapture != null;
                 if (_resolved)
-                    Plugin.Log?.LogInfo("[RCCAM] MissileCamera Bridge found (v" + ver + ") — headless RC capture enabled.");
+                    Plugin.Log?.LogInfo("[MISSILE CAMERA] MissileCamera Bridge found (v" + ver + ") — headless capture enabled.");
                 else
-                    Plugin.Log?.LogWarning("[RCCAM] MissileCamera Bridge shape mismatch — headless RC capture disabled.");
+                    Plugin.Log?.LogWarning("[MISSILE CAMERA] MissileCamera Bridge shape mismatch — headless capture disabled.");
                 return _resolved;
             }
             catch (Exception ex)
             {
-                Plugin.Log?.LogWarning($"[RCCAM] MissileCamera bridge resolve failed: {ex.Message}");
+                Plugin.Log?.LogWarning($"[MISSILE CAMERA] MissileCamera bridge resolve failed: {ex.Message}");
                 return false;
             }
         }

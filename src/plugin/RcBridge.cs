@@ -91,7 +91,7 @@ namespace RcMissileCamera
                 Type? t = asm.GetType("MissileCameraRemoteControl.Bridge.McRcBridge");
                 if (t == null)
                 {
-                    Plugin.Log?.LogWarning("[RCCAM] MissileCameraRemoteControl found but has no Bridge — too old? RC page disabled.");
+                    Plugin.Log?.LogWarning("[MISSILE CAMERA] MissileCameraRemoteControl found but has no Bridge — too old? Remote-control controls disabled.");
                     return false;
                 }
 
@@ -99,7 +99,7 @@ namespace RcMissileCamera
                 int ver = verField != null ? (int)verField.GetValue(null) : 0;
                 if (ver < MinApiVersion)
                 {
-                    Plugin.Log?.LogWarning($"[RCCAM] MissileCameraRemoteControl Bridge ApiVersion {ver} < {MinApiVersion} — RC page disabled.");
+                    Plugin.Log?.LogWarning($"[MISSILE CAMERA] MissileCameraRemoteControl Bridge ApiVersion {ver} < {MinApiVersion} — remote-control controls disabled.");
                     return false;
                 }
 
@@ -137,14 +137,14 @@ namespace RcMissileCamera
                     && _toggleFormationFollow != null && _manualDetonate != null;
 
                 if (_resolved)
-                    Plugin.Log?.LogInfo("[RCCAM] MissileCameraRemoteControl Bridge found (v" + ver + ") — RC page enabled.");
+                    Plugin.Log?.LogInfo("[MISSILE CAMERA] MissileCameraRemoteControl Bridge found (v" + ver + ") — remote-control controls enabled.");
                 else
-                    Plugin.Log?.LogWarning("[RCCAM] MissileCameraRemoteControl Bridge shape mismatch — RC page disabled.");
+                    Plugin.Log?.LogWarning("[MISSILE CAMERA] MissileCameraRemoteControl Bridge shape mismatch — remote-control controls disabled.");
                 return _resolved;
             }
             catch (Exception ex)
             {
-                Plugin.Log?.LogWarning($"[RCCAM] RC bridge resolve failed: {ex.Message}");
+                Plugin.Log?.LogWarning($"[MISSILE CAMERA] remote-control bridge resolve failed: {ex.Message}");
                 return false;
             }
         }

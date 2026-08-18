@@ -8,9 +8,9 @@ namespace RcMissileCamera
     // of the game's own TargetCam, and pushed to NOXMFD's generic extension MJPEG surface
     // (Api.PushMjpegFrame — docs/extensions-api.md) instead of a page-specific one.
     //
-    // A plain object (not a MonoBehaviour), owned by RcLifecycle exactly like NOXMFD's TgpFeed is
-    // owned by TelemetryReader: driven via Tick(dt) each frame, Active read by RcTelemetry, torn
-    // down from RcLifecycle.OnDestroy.
+    // A plain object (not a MonoBehaviour), owned by MissileCameraLifecycle exactly like NOXMFD's
+    // TgpFeed is owned by TelemetryReader: driven via Tick(dt) each frame, Active read by
+    // MissileCameraTelemetry, torn down from MissileCameraLifecycle.OnDestroy.
     internal class RcFeed
     {
         // 20 Hz: this is the pilot's direct aiming view (vs. TGP's 15 Hz targeting reference), so
@@ -42,9 +42,10 @@ namespace RcMissileCamera
         private void CaptureFrame()
         {
             // Gate on /ext/rc-missile-camera/feed.mjpg subscribers — same reasoning as TgpFeed: no
-            // point reading RcBridge or touching a Camera every tick when no client has the RC
-            // page open. This gate is also what drives McBridge.RequestCapture below — see that
-            // call for why it must run even on the "no subscribers" branch, not just here.
+            // point reading RcBridge or touching a Camera every tick when no client has the
+            // MISSILE CAMERA page open. This gate is also what drives McBridge.RequestCapture
+            // below — see that call for why it must run even on the "no subscribers" branch, not
+            // just here.
             if (!NOXMFD.Api.WantsMjpegFrames(Plugin.ExtId))
             {
                 McBridge.RequestCapture(false);
@@ -86,7 +87,7 @@ namespace RcMissileCamera
                     // stops mid-session, this is what tells us when/why on the next log, instead of
                     // total silence after the one-time startup dump.
                     _hadSrc = false;
-                    Plugin.Log?.LogWarning("[RCCAM] feed became unavailable "
+                    Plugin.Log?.LogWarning("[MISSILE CAMERA] feed became unavailable "
                         + $"(McBridge.Available={McBridge.Available}, HasTrackableMissile={McBridge.HasTrackableMissile}, "
                         + $"haveCam={haveCam}).");
                 }
@@ -95,7 +96,7 @@ namespace RcMissileCamera
             if (!_hadSrc)
             {
                 _hadSrc = true;
-                Plugin.Log?.LogInfo("[RCCAM] feed (re)available.");
+                Plugin.Log?.LogInfo("[MISSILE CAMERA] feed (re)available.");
             }
 
             // Match the captured frame to the source's aspect ratio — see TgpFeed for why (avoids
@@ -122,7 +123,7 @@ namespace RcMissileCamera
             if (!_srcLogged)
             {
                 _srcLogged = true;
-                Plugin.Log?.LogInfo($"[RCCAM] source texture {sw}x{sh} (aspect {(float)sw / sh:0.000}); capturing at {targetW}x{targetH}.");
+                Plugin.Log?.LogInfo($"[MISSILE CAMERA] source texture {sw}x{sh} (aspect {(float)sw / sh:0.000}); capturing at {targetW}x{targetH}.");
 
                 // Diagnostic: camera state itself, when we have one to inspect (McBridge only
                 // exposes the texture, so fetch its Camera separately just for this one-time log —
@@ -130,7 +131,7 @@ namespace RcMissileCamera
                 Camera? diagCam = McBridge.Available ? McBridge.FeedCamera : null;
                 if (diagCam != null)
                 {
-                    Plugin.Log?.LogInfo($"[RCCAM] feed camera diag: enabled={diagCam.enabled}, "
+                    Plugin.Log?.LogInfo($"[MISSILE CAMERA] feed camera diag: enabled={diagCam.enabled}, "
                         + $"cullingMask={diagCam.cullingMask}, clip=[{diagCam.nearClipPlane:0.###},{diagCam.farClipPlane:0.#}], "
                         + $"fov={diagCam.fieldOfView:0.#}, targetTexture={(diagCam.targetTexture != null ? diagCam.targetTexture.GetInstanceID().ToString() : "null")}, "
                         + $"feedTexture={src.GetInstanceID()}, sameRT={(diagCam.targetTexture == src)}.");
@@ -178,7 +179,7 @@ namespace RcMissileCamera
                 long sum = 0; int n = 0;
                 for (int i = 0; i < data.Length; i += 97) { sum += data[i]; n++; }
                 double avg = n > 0 ? (double)sum / n : -1;
-                Plugin.Log?.LogInfo($"[RCCAM] frame diag: {w}x{h}, avg sampled byte ≈ {avg:0.0} (0=black, 255=white/full).");
+                Plugin.Log?.LogInfo($"[MISSILE CAMERA] frame diag: {w}x{h}, avg sampled byte ≈ {avg:0.0} (0=black, 255=white/full).");
             }
 
             _tex.LoadRawTextureData(data);
@@ -203,7 +204,7 @@ namespace RcMissileCamera
             _hadSrc           = false;
             _readbackInFlight = false;
             NOXMFD.Api.ClearMjpegFrame(Plugin.ExtId);
-            if (wasEngaged) Plugin.Log?.LogInfo("[RCCAM] disengaged (no subscribers).");
+            if (wasEngaged) Plugin.Log?.LogInfo("[MISSILE CAMERA] disengaged (no subscribers).");
         }
     }
 }

@@ -14,10 +14,13 @@ extension API (`NOXMFD.Api`) instead of living inside NOXMFD itself.
 
 Mirrors NOXMFD's own `src/plugin` + `src/web` split.
 
-- `src/plugin/Plugin.cs`, `RcLifecycle.cs`, `RcCommands.cs`, `RcTelemetry.cs`, `RcAssets.cs` — the plugin.
+- `src/plugin/Plugin.cs`, `MissileCameraLifecycle.cs`, `MissileCameraCommands.cs`,
+  `MissileCameraTelemetry.cs`, `MissileCameraAssets.cs` — the plugin.
 - `src/plugin/McBridge.cs`, `RcBridge.cs`, `RcFeed.cs` — reflection-based soft dependencies on other
-  mods (Mirror Camera, RC-style controls) that don't know this plugin exists.
-- `src/web/rc.html`, `rc.css`, `rc.js` — the MFD page itself, served by NOXMFD and standardized on the
+  mods (the base Missile Camera mod and its Remote Control add-on) that don't know this plugin
+  exists. Kept their `Rc`/`Mc` names since those encode which of the two third-party mods each
+  one bridges to.
+- `src/web/missile-camera.html`, `missile-camera.css`, `missile-camera.js` — the MFD page itself, served by NOXMFD and standardized on the
   extension telemetry contract (`{type:'ext', data}`), sent to `/ext/rc-missile-camera/command`.
 - `lib/NOXMFD.dll` — a prebuilt copy of NOXMFD, referenced only so this project compiles standalone.
   It is **not** shipped or loaded twice — see the build/install notes below.

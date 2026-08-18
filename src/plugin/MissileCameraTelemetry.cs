@@ -14,7 +14,7 @@ namespace RcMissileCamera
     // (docs/extensions-api.md, Deferred). Ceiling: the reticle updates at 10 Hz instead of ~60 Hz,
     // which will read as slightly less smooth during a fast drag. Upgrade path: once the
     // browser-side generic listener registration lands, switch this back to PublishEvent.
-    internal static class RcTelemetry
+    internal static class MissileCameraTelemetry
     {
         internal static void Publish(RcFeed feed)
         {

@@ -6,14 +6,14 @@ namespace RcMissileCamera
 {
     // The resolver passed to Api.RegisterExtension — same suffix-match idiom NOXMFD's own
     // ServeAssetRel uses against its manifest, just against this project's own embedded
-    // resources instead. "" (the page itself) maps to rc.html.
-    internal static class RcAssets
+    // resources instead. "" (the page itself) maps to missile-camera.html.
+    internal static class MissileCameraAssets
     {
-        private static readonly Assembly _asm = typeof(RcAssets).Assembly;
+        private static readonly Assembly _asm = typeof(MissileCameraAssets).Assembly;
 
         internal static byte[]? Resolve(string relPath)
         {
-            string name = string.IsNullOrEmpty(relPath) ? "rc.html" : relPath;
+            string name = string.IsNullOrEmpty(relPath) ? "missile-camera.html" : relPath;
             string suffix = "." + ("web." + name).Replace('/', '.');
 
             string? resourceName = null;

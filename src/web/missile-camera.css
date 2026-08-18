@@ -1,5 +1,6 @@
-/* RC page — Missile Camera: Remote Control feed + controls. Base reset / colour tokens / font /
-   .mfd-empty / .pad-cursor come from theme.css. See rc.html for the message contract. */
+/* MISSILE CAMERA page — Missile Camera: Remote Control feed + controls. Base reset / colour
+   tokens / font / .mfd-empty / .pad-cursor come from theme.css. See missile-camera.html for the
+   message contract. */
 
 .rc-panel {
   position: absolute;
@@ -94,7 +95,7 @@
 }
 .rc-thr-fill {
   width: 100%;
-  height: 0%;   /* set inline per-frame by rc.js */
+  height: 0%;   /* set inline per-frame by missile-camera.js */
   background: var(--no-green);
 }
 .rc-boost { margin-top: 4px; }
