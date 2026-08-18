@@ -8,9 +8,7 @@ without touching NOXMFD's own source at all.
 It's a port of the RC camera work originally prototyped by lupfine, rebuilt against NOXMFD's
 extension API (`NOXMFD.Api`) instead of living inside NOXMFD itself.
 
-**This repo will be deleted once its purpose is served.** If you're lupfine (or anyone else)
-picking this up: copy this code into your own repo and rename/rebrand it as your real mod. Don't
-build on top of this repo as a long-term base.
+**This repo will be deleted once its purpose is served.**
 
 ## What's here
 
