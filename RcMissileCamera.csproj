@@ -1,0 +1,69 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <!--
+    MissileCamera: Remote Control page, a worked-example NOXMFD extension (see NOXMFD's
+    docs/extensions-api.md). This is a disposable POC repo, standalone from NOXMFD's own source
+    — it never edits NOXMFD's plugin/web code, only consumes the public NOXMFD.Api surface via
+    the prebuilt lib\NOXMFD.dll committed alongside this project. Meant to be copied and turned
+    into a real extension mod, not maintained long-term as-is.
+  -->
+  <Import Project="GameDir.props" Condition="Exists('GameDir.props')" />
+
+  <PropertyGroup>
+    <GameDir Condition="'$(GameDir)' == ''">C:\Program Files (x86)\Steam\steamapps\common\Nuclear Option</GameDir>
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.1</TargetFramework>
+    <AssemblyName>RcMissileCamera</AssemblyName>
+    <Product>RC Missile Camera</Product>
+    <Description>MissileCamera: Remote Control page for NO XMFD, as an extension</Description>
+    <Version>0.1.0</Version>
+    <LangVersion>latest</LangVersion>
+    <Nullable>enable</Nullable>
+    <RootNamespace>RcMissileCamera</RootNamespace>
+    <DebugType>portable</DebugType>
+    <NoWarn>BepInEx002</NoWarn>
+    <RestoreAdditionalProjectSources>
+      https://api.nuget.org/v3/index.json;
+      https://nuget.bepinex.dev/v3/index.json;
+      https://nuget.samboy.dev/v3/index.json
+    </RestoreAdditionalProjectSources>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <!-- Own embedded web assets, same convention as NOXMFD's own src/web (docs/src-architecture.md)
+         — resource names include ".web.<dotted path>", resolved by RcAssets.cs's own suffix match. -->
+    <EmbeddedResource Include="web\**\*" Exclude="web\**\*.md" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="BepInEx.Core" Version="5.4.21" />
+    <PackageReference Include="BepInEx.PluginInfoProps" Version="2.1.0" />
+    <!-- No Assembly-CSharp/Mirage/Rewired/UnityEngine.UI reference — McBridge/RcBridge/RcFeed
+         only ever touch UnityEngine.Modules types (Camera, Texture, RenderTexture,
+         AsyncGPUReadback), never game-specific ones. That's a McBridge/RcBridge design property
+         (a soft dependency on another MOD, not on the game itself), not something new here. -->
+    <PackageReference Include="UnityEngine.Modules" Version="2022.3.6" IncludeAssets="compile" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <!-- The only NOXMFD dependency this project has: its public Api surface. Referenced as a
+         prebuilt DLL (not source) since this repo is standalone from NOXMFD's own — Private=
+         false because BepInEx already loads NOXMFD.dll itself; copying a second copy alongside
+         this plugin would double-load the assembly. -->
+    <Reference Include="NOXMFD">
+      <HintPath>lib\NOXMFD.dll</HintPath>
+      <Private>false</Private>
+    </Reference>
+  </ItemGroup>
+
+  <Target Name="DeployToGame" AfterTargets="Build">
+    <Copy
+      SourceFiles="$(OutputPath)$(AssemblyName).dll"
+      DestinationFolder="$(GameDir)\BepInEx\plugins"
+      OverwriteReadOnlyFiles="true" />
+    <Message Text="Deployed $(AssemblyName).dll to $(GameDir)\BepInEx\plugins" Importance="high" />
+  </Target>
+
+</Project>
