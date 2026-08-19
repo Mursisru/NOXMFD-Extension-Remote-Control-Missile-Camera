@@ -58,8 +58,8 @@ The build copies `NOXMFD.RcMissileCamera.dll` straight into `<GameDir>\BepInEx\p
    load without it), plus MissileCamera and MissileCamera Remote Control.
 2. Drop `NOXMFD.RcMissileCamera.dll` into `BepInEx/plugins/`. Do **not** also copy `lib/NOXMFD.dll` there
    — that's the same assembly NOXMFD's own plugin already loads; a second copy would double-load it.
-3. Launch the game. The RC CAM page appears under NOXMFD's EXT nav automatically — no NOXMFD
-   changes needed.
+3. Launch the game. The MISSILE CAMERA page appears under NOXMFD's EXT nav automatically — no
+   NOXMFD changes needed.
 
 ## Updating `lib/NOXMFD.dll`
 
