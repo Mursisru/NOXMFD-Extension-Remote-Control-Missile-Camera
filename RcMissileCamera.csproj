@@ -1,11 +1,10 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <!--
-    MissileCamera: Remote Control page, a worked-example NOXMFD extension (see NOXMFD's
-    docs/extensions-api.md). This is a disposable POC repo, standalone from NOXMFD's own source
-    — it never edits NOXMFD's plugin/web code, only consumes the public NOXMFD.Api surface via
-    the prebuilt lib\NOXMFD.dll committed alongside this project. Meant to be copied and turned
-    into a real extension mod, not maintained long-term as-is.
+    MissileCamera: Remote Control page, a standalone NOXMFD extension (see NOXMFD's
+    docs/extensions-api.md). Lives in its own repo, separate from NOXMFD's own source — it never
+    edits NOXMFD's plugin/web code, only consumes the public NOXMFD.Api surface via the prebuilt
+    lib\NOXMFD.dll committed alongside this project.
   -->
   <Import Project="GameDir.props" Condition="Exists('GameDir.props')" />
 
