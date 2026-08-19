@@ -2,7 +2,7 @@
 
   <!--
     MissileCamera: Remote Control page, a standalone NOXMFD extension (see NOXMFD's
-    docs/extensions-api.md). Lives in its own repo, separate from NOXMFD's own source — it never
+    EXTENSIONS.md). Lives in its own repo, separate from NOXMFD's own source — it never
     edits NOXMFD's plugin/web code, only consumes the public NOXMFD.Api surface via the prebuilt
     lib\NOXMFD.dll committed alongside this project.
   -->

@@ -5,7 +5,7 @@ Adds a **MissileCamera: Remote Control** page to [NOXMFD](https://github.com/rok
 vision mode, manual detonate) for missiles under [MissileCamera Remote
 Control](https://github.com/Mursisru/MissileCamera-Remote-Control)'s command. Built entirely
 through NOXMFD's public extension API (`NOXMFD.Api`, see NOXMFD's
-[`docs/extensions-api.md`](https://github.com/roke77/NOXMFD/blob/main/docs/extensions-api.md)) —
+[`EXTENSIONS.md`](https://github.com/roke77/NOXMFD/blob/main/EXTENSIONS.md)) —
 it never touches NOXMFD's own source, and NOXMFD needs no changes to load it.
 
 Requires [MissileCamera](https://github.com/Mursisru/MissileCamera) and [MissileCamera Remote
