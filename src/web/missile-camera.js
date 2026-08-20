@@ -230,7 +230,10 @@ function applyRcState(m) {
   rcPanel.classList.toggle('has-feed', !!m.fsActive);
 
   if (!m.available) {
-    rcEmptyMsg.textContent = '— NOT INSTALLED —';
+    // Not "NOT INSTALLED" — this flips false any time the plugin-side bridge isn't reporting
+    // live right now (still resolving after boot, or genuinely absent), and the browser has no
+    // way to tell those apart. Treat it as a signal-loss state, not a diagnosis.
+    rcEmptyMsg.textContent = '— NO SIGNAL —';
   } else if (!m.fsActive) {
     rcEmptyMsg.textContent = '— CAMERA NOT ACTIVE —';
   }
