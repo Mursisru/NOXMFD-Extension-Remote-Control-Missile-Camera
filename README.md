@@ -140,7 +140,7 @@ See [CHANGELOG.md](CHANGELOG.md).
 
 ### Thanks to project contributors
 
-[![Contributors](https://contrib.rocks/image?repo=Mursisru/NOXMFD-Extension-Remote-Control-Missile-Camera)](https://github.com/Mursisru/NOXMFD-Extension-Remote-Control-Missile-Camera/graphs/contributors)
+[![Contributors](https://raw.githubusercontent.com/Mursisru/NOXMFD-Extension-Remote-Control-Missile-Camera/master/.github/contributors.png)](https://github.com/Mursisru/NOXMFD-Extension-Remote-Control-Missile-Camera/graphs/contributors)
 
 - **[Mursisru](https://github.com/Mursisru)** — this extension, MissileCamera, and MissileCamera: Remote Control
 - **[roke77](https://github.com/roke77)** — [NOXMFD](https://github.com/roke77/NOXMFD) host and extension API
