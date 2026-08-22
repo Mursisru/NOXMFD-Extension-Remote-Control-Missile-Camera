@@ -72,6 +72,14 @@
   border: 1px solid var(--no-panel-border);
   padding: 6px 10px;
   border-radius: 2px;
+  /* DETONATE's 600ms pointerdown-hold otherwise races iOS Safari's own long-press gesture
+     (context menu / text-selection callout, ~500-750ms) — whichever wins first either fires the
+     hold timer or cancels the pointer sequence out from under it. Suppress the native gesture on
+     every button here, not just DETONATE, since AB is also a hold. */
+  touch-action: manipulation;
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  user-select: none;
 }
 .rc-btn:active { background: rgba(57,255,20,0.18); }
 .rc-btn.on { color: var(--no-ink); background: var(--no-green); }

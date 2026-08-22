@@ -150,7 +150,11 @@ rcBoostBtn.addEventListener('pointerleave', releaseBoost);
 // single tap, the same way a cockpit guard flap makes a critical action hard to fat-finger.
 const DETONATE_HOLD_MS = 600;
 let detonateTimer = null;
-rcDetBtn.addEventListener('pointerdown', function() {
+rcDetBtn.addEventListener('pointerdown', function(e) {
+  // Without this, iOS Safari's own long-press gesture (context menu / text-selection callout,
+  // ~500-750ms) can race the hold timer below and steal the pointer sequence — touch-action/
+  // -webkit-touch-callout in missile-camera.css cover the CSS half, this covers the event itself.
+  e.preventDefault();
   rcDetBtn.classList.add('on');
   detonateTimer = setTimeout(function() {
     detonateTimer = null;

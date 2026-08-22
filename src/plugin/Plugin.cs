@@ -13,7 +13,7 @@ namespace RcMissileCamera
     // That surface hasn't changed shape since, so this is the true floor — anything at or above
     // it has the shape this extension was written against, per docs/extensions-api.md's
     // Versioning section.
-    [BepInDependency("com.roque.NOXMFD", MinimumVersion = "0.23.0")]
+    [BepInDependency("com.roque.NOXMFD", "0.23.0")]
     [BepInProcess("NuclearOption.exe")]
     [BepInProcess("NuclearOptionServer.exe")]
     public class Plugin : BaseUnityPlugin
