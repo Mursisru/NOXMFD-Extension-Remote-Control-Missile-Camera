@@ -9,11 +9,11 @@ namespace RcMissileCamera
     // public Api at Awake() (docs/extensions-api.md) instead of anything in src/plugin/ knowing
     // this mod exists.
     [BepInPlugin("com.roque.rc-missile-camera", "NOXMFD: RC Missile Camera Extension", MyPluginInfo.PLUGIN_VERSION)]
-    // No MinimumVersion pin yet — this is the extension API's own first real consumer, still on
-    // the same branch as the API itself. A real release should pin one (Api.ApiVersion is the
-    // thing to check it against), the same discipline docs/extensions-api.md's Versioning
-    // section describes.
-    [BepInDependency("com.roque.NOXMFD")]
+    // Pinned to the version Api.cs (the only surface this extension touches) first shipped in.
+    // That surface hasn't changed shape since, so this is the true floor — anything at or above
+    // it has the shape this extension was written against, per docs/extensions-api.md's
+    // Versioning section.
+    [BepInDependency("com.roque.NOXMFD", MinimumVersion = "0.23.0")]
     [BepInProcess("NuclearOption.exe")]
     [BepInProcess("NuclearOptionServer.exe")]
     public class Plugin : BaseUnityPlugin

@@ -50,8 +50,24 @@ const rcMarkersEl = document.getElementById('rc-markers');
 // current state without their own bookkeeping.
 let state = { available: false, fsActive: false, controlling: false, formation: false, pool: [] };
 
+// MJPEG fires 'load' only once, so it can't detect a stall — but 'error' still covers the hard
+// case where the connection breaks outright (network blip, backgrounded tab, server-side
+// disconnect). <img> never retries a stream on its own, so without this the feed stays dead
+// until the whole page is reloaded — reopen the connection ourselves instead.
+let rcFeedRetryCount = 0;
+let rcFeedRetryTimer = null;
+function scheduleRcFeedRetry() {
+  if (rcFeedRetryTimer) return;
+  rcFeedRetryTimer = setTimeout(function () {
+    rcFeedRetryTimer = null;
+    rcImg.src = '/ext/rc-missile-camera/feed.mjpg?r=' + (++rcFeedRetryCount);
+  }, 1200);
+}
 rcImg.src = '/ext/rc-missile-camera/feed.mjpg';
-rcImg.addEventListener('error', function() { rcPanel.classList.remove('has-feed'); });
+rcImg.addEventListener('error', function() {
+  rcPanel.classList.remove('has-feed');
+  scheduleRcFeedRetry();
+});
 
 // ── Aim drag ────────────────────────────────────────────────────────────────────────
 // Degrees per CSS pixel of drag — tuned to feel roughly like the in-cockpit mouse sensitivity
