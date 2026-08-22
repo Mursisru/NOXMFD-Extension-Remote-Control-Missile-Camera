@@ -54,8 +54,8 @@ The build copies `NOXMFD.RcMissileCamera.dll` straight into `<GameDir>\BepInEx\p
 
 ## Installing
 
-1. Install NOXMFD itself first (this plugin declares a hard `[BepInDependency]` on it and won't
-   load without it), plus MissileCamera and MissileCamera Remote Control.
+1. Install NOXMFD itself first (this plugin declares a hard `[BepInDependency]` on NOXMFD 0.23.0
+   or newer and won't load without it), plus MissileCamera and MissileCamera Remote Control.
 2. Drop `NOXMFD.RcMissileCamera.dll` into `BepInEx/plugins/`. Do **not** also copy `lib/NOXMFD.dll` there
    — that's the same assembly NOXMFD's own plugin already loads; a second copy would double-load it.
 3. Launch the game. The MISSILE CAMERA page appears under NOXMFD's EXT nav automatically — no
